@@ -37,4 +37,3 @@ cars_data.append(new_car.to_dict())
 # Save updated data back to file
 with open("cars.json", "w") as file:
     json.dump(cars_data, file, indent=4)
-print(cars_data)
