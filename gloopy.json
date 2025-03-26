@@ -1,0 +1,15 @@
+{
+    "alice@example.com": {
+        "name": "Alice",
+        "email": "alice@example.com",
+        "password": "password123",
+        "student_id": "S12345",
+        "flashcards": {}
+    },
+    "smith@example.com": {
+        "name": "Mr. Smith",
+        "email": "smith@example.com",
+        "password": "teacherpass",
+        "subject": "Mathematics"
+    }
+}

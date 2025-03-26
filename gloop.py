@@ -87,7 +87,7 @@ def login():
 # Call the login function
 login()
  """
-
+""" 
 flashcards = {}
 
 class User:
@@ -169,7 +169,7 @@ def login():
         print(user.abilities())
     else:
         print("Invalid name, email, or password.")
-login()
+login() """
 
 """ def login():
     email = input("Enter your email to log in: ")
@@ -184,3 +184,317 @@ login()
 
 # Call the login function
 login() """
+
+
+
+""" import json
+
+flashcards = {}
+
+class User:
+    def __init__(self, name, email, password):
+        self.name = name
+        self.email = email
+        self.password = password
+    
+    def display_info(self):
+        return f"User: {self.name}, Email: {self.email}"
+
+class Student(User):
+    def __init__(self, name, email, password, student_id):
+        super().__init__(name, email, password)
+        self.student_id = student_id
+    
+    def display_info(self):
+        return f"Student: {self.name}, Email: {self.email}, Student ID: {self.student_id}"
+    
+    def abilities(self):
+        while True:
+            for question, answer in flashcards.items():
+                user_answer = input(f'Question: {question} ')
+                if user_answer == answer:
+                    print('Correct!')
+                else:
+                    print('Incorrect!')
+
+    def to_dict(self):
+        return {
+            "name": self.name,
+            "email": self.email,
+            "password": self.password,
+            "student_id": self.student_id,
+        }
+
+class Teacher(User):
+    def __init__(self, name, email, password, subject):
+        super().__init__(name, email, password)
+        self.subject = subject
+    
+    def display_info(self):
+        return f"Teacher: {self.name}, Email: {self.email}, Subject: {self.subject}"
+
+    def abilities(self):
+        while True:
+            makeone = input('Make a flashcard or type "stop" to end: ')
+            if makeone.lower() == 'stop':
+                break
+            key, value = makeone.split(',', 1)
+            flashcards[key.strip()] = value.strip()  
+            print(f"Flashcard created: Key = '{key.strip()}', Value = '{value.strip()}'")
+
+    def to_dict(self):
+        return {
+            "name": self.name,
+            "email": self.email,
+            "password": self.password,
+            "subject": self.subject,
+        }
+
+# Create users
+users_data = {
+    "alice@example.com": Student("Alice", "alice@example.com", "password123", "S12345"),
+    "smith@example.com": Teacher("Mr. Smith", "smith@example.com", "teacherpass", "Mathematics"),
+}
+
+# Convert users data to a serializable format
+serializable_data = {
+    key: value.to_dict() for key, value in users_data.items()
+}
+
+# Save to JSON file
+with open("gloopy.json", "w") as file:
+    json.dump(serializable_data, file, indent=4)
+
+def login():
+    name = input('Enter your name: ')
+    email = input('Enter your email: ')
+    password = input('Enter your password: ')
+    
+    user = users_data.get(email)
+    
+    if user and user.password == password and user.name == name:
+        print(user.display_info())
+        user.abilities()
+    else:
+        print("Invalid name, email, or password.")
+
+login()
+ """
+
+
+""" 
+import json
+
+flashcards = {}
+
+class User:
+    def __init__(self, name, email, password):
+        self.name = name
+        self.email = email
+        self.password = password
+    
+    def display_info(self):
+        return f"User: {self.name}, Email: {self.email}"
+
+class Student(User):
+    def __init__(self, name, email, password, student_id):
+        super().__init__(name, email, password)
+        self.student_id = student_id
+    
+    def display_info(self):
+        return f"Student: {self.name}, Email: {self.email}, Student ID: {self.student_id}"
+    
+    def abilities(self):
+        while True:
+            for question, answer in flashcards.items():
+                user_answer = input(f'Question: {question} ')
+                if user_answer == answer:
+                    print('Correct!')
+                else:
+                    print('Incorrect!')
+
+    def to_dict(self):
+        return {
+            "name": self.name,
+            "email": self.email,
+            "password": self.password,
+            "student_id": self.student_id,
+        }
+
+class Teacher(User):
+    def __init__(self, name, email, password, subject):
+        super().__init__(name, email, password)
+        self.subject = subject
+    
+    def display_info(self):
+        return f"Teacher: {self.name}, Email: {self.email}, Subject: {self.subject}"
+
+    def add_flashcard(self, key, value):
+        flashcards[key.strip()] = value.strip()
+        self.save_flashcards()
+
+    def save_flashcards(self):
+        with open("skibidi.json", "w") as file:
+            json.dump(flashcards, file, indent=4)
+
+    def abilities(self):
+        while True:
+            makeone = input('Make a flashcard or type "stop" to end: ')
+            if makeone == 'stop':
+                break
+            key, value = makeone.split(',', 1)
+            self.add_flashcard(key, value)
+            print(f"Flashcard created: Key = '{key}', Value = '{value}'")
+
+    def to_dict(self):
+        return {
+            "name": self.name,
+            "email": self.email,
+            "password": self.password,
+            "subject": self.subject,
+        }
+
+# Create users
+users_data = {
+    "alice@example.com": Student("Alice", "alice@example.com", "password123", "S12345"),
+    "smith@example.com": Teacher("Mr. Smith", "smith@example.com", "teacherpass", "Mathematics"),
+}
+
+# Convert users data to a serializable format
+serializable_data = {
+    key: value.to_dict() for key, value in users_data.items()
+}
+
+# Save users data to JSON file
+with open("gloopy.json", "w") as file:
+    json.dump(serializable_data, file, indent=4)
+
+def login():
+    name = input('Enter your name: ')
+    email = input('Enter your email: ')
+    password = input('Enter your password: ')
+    
+    user = users_data.get(email)
+    
+    if user and user.password == password and user.name == name:
+        print(user.display_info())
+        user.abilities()
+    else:
+        print("Invalid name, email, or password.")
+
+login() """
+
+
+
+import json
+
+# Function to load flashcards from a JSON file
+def load_flashcards(filename):
+    try:
+        with open(filename, "r") as file:
+            return json.load(file)
+    except FileNotFoundError:
+        print("Flashcard file not found.")
+        return {}
+
+# User class
+class User:
+    def __init__(self, name, email, password):
+        self.name = name
+        self.email = email
+        self.password = password
+    
+    def display_info(self):
+        return f"User: {self.name}, Email: {self.email}"
+
+# Student class
+class Student(User):
+    def __init__(self, name, email, password, student_id):
+        super().__init__(name, email, password)
+        self.student_id = student_id
+        self.flashcards = {}  # Initialize empty flashcards
+
+    def display_info(self):
+        return f"Student: {self.name}, Email: {self.email}, Student ID: {self.student_id}"
+
+    def abilities(self):
+        self.flashcards = load_flashcards("skibidi.json")  # Loads
+        correct_answers = 0
+        total_questions = 0
+        stopinput = input('')
+        while True:
+            for question, answer in self.flashcards.items():
+                user_answer = input(f'Question: {question} ')
+                total_questions += 1
+                if user_answer.strip() == answer.strip():
+                    print('Correct!')
+                    correct_answers += 1
+                else:
+                    print(f'Incorrect! The correct answer is: {answer}')
+                if stopinput == ('stop'):
+                    break
+            print(f'You got {correct_answers} out of {total_questions} correct.')
+            break
+
+# Teacher class
+class Teacher(User):
+    flashcards = {}  
+
+    def __init__(self, name, email, password, subject):
+        super().__init__(name, email, password)
+        self.subject = subject
+    
+    def display_info(self):
+        return f"Teacher: {self.name}, Email: {self.email}, Subject: {self.subject}"
+
+    def add_flashcard(self, key, value):
+        Teacher.flashcards[key.strip()] = value.strip()
+        self.save_flashcards()
+
+    def save_flashcards(self):
+        with open("skibidi.json", "w") as file:
+            json.dump(Teacher.flashcards, file, indent=4)
+
+    def abilities(self):
+        while True:
+            makeone = input('Make a flashcard or type "stop" to end: ')
+            if makeone.lower() == 'stop':
+                break
+            try:
+                key, value = makeone.split(',', 1) #only allows 1 comma
+                self.add_flashcard(key, value)
+                print(f"Flashcard created: Key = '{key.strip()}', Value = '{value.strip()}'")
+            except ValueError:
+                print('you cant make that formatttt')
+
+    def to_dict(self):
+        return {
+            "name": self.name,
+            "email": self.email,
+            "password": self.password,
+            "subject": self.subject,
+        }
+
+users_data = {
+    "alice@example.com": Student("Alice", "alice@example.com", "password123", "S12345"),
+    "smith@example.com": Teacher("Mr. Smith", "smith@example.com", "teacherpass", "Mathematics"),
+}
+with open("gloopy.json", "w") as file:
+    json.dump({key: value.__dict__ for key, value in users_data.items()}, file, indent=4)
+
+# Login function
+def login():
+    name = input('Enter your name: ')
+    email = input('Enter your email: ')
+    password = input('Enter your password: ')
+    
+    user = users_data.get(email)
+    
+    if user and user.password == password and user.name == name:
+        print(user.display_info())
+        user.abilities()
+    else:
+        print("Invalid name, email, or password.")
+
+# Start the program
+login()
