@@ -506,7 +506,7 @@ def login():
 
 login() """
 
-import json
+""" import json
 
 def load_flashcards(filename):
     try:
@@ -574,9 +574,9 @@ class Teacher(User):
             if makeone.lower() == 'stop':
                 break
             try:
-                key, value = makeone.split(',', 1)  # Only allows 1 comma
-                self.flashcards[key.strip()] = value.strip()  # Store flashcard
-                self.save_flashcards()  # Save flashcards to file
+                key, value = makeone.split(',', 1)  # allows 1 comma cuz 1 vlaue
+                self.flashcards[key.strip()] = value.strip()  
+                self.save_flashcards() 
                 print(f"Flashcard created: Key = '{key.strip()}', Value = '{value.strip()}'")
             except ValueError:
                 print('Invalid format. Please use "question,answer".')
@@ -584,6 +584,111 @@ class Teacher(User):
     def save_flashcards(self):
         with open("skibidi.json", "w") as file:
             json.dump(self.flashcards, file, indent=4)
+
+def login():
+    users_data = {
+        "alice@example.com": Student("Alice", "alice@example.com", "password123", "S12345"),
+        "smith@example.com": Teacher("Mr. Smith", "smith@example.com", "teacherpass", "Mathematics"),
+    }
+
+    name = input('Enter your name: ')
+    email = input('Enter your email: ')
+    password = input('Enter your password: ')
+    
+    user = users_data.get(email)
+    
+    if user and user.password == password and user.name == name:
+        print(user.display_info())
+        user.abilities()
+    else:
+        print("Invalid name, email, or password.")
+
+login() """
+
+
+import json
+
+class Flashcards:
+    def __init__(self, filename):
+        self.filename = filename
+        self.flashcards = self.load_flashcards()
+
+    def load_flashcards(self):
+        try:
+            with open(self.filename, "r") as file:
+                return json.load(file)
+        except FileNotFoundError:
+            print("Flashcard file not found.")
+            return {}
+
+    def save_flashcards(self):
+        with open(self.filename, "w") as file:
+            json.dump(self.flashcards, file, indent=4)
+
+class User:
+    def __init__(self, name, email, password):
+        self.name = name
+        self.email = email
+        self.password = password
+    
+    def display_info(self):
+        return f"User: {self.name}, Email: {self.email}"
+
+class Student(User):
+    def __init__(self, name, email, password, student_id):
+        super().__init__(name, email, password)
+        self.student_id = student_id
+        self.flashcards_manager = Flashcards("skibidi.json")
+
+    def display_info(self):
+        return f"Student: {self.name}, Email: {self.email}, Student ID: {self.student_id}"
+
+    def abilities(self):
+        correct_answers = 0
+        total_questions = 0
+        streak = 0
+        bonus_points = 0
+
+        while True:
+            for question, answer in self.flashcards_manager.flashcards.items():
+                user_answer = input(f'Question: {question} (type "stop" to end): ')
+                if user_answer.strip().lower() == "stop":
+                    print(f'You got {correct_answers} out of {total_questions} correct. Bonus points: {bonus_points}')
+                    return
+
+                total_questions += 1
+                if user_answer.strip() == answer.strip():
+                    print('Correct!')
+                    correct_answers += 1
+                    streak += 1
+                    if streak % 3 == 0:
+                        bonus_points += 1
+                        print(f'Bonus point awarded! Total bonus points: {bonus_points}')
+                else:
+                    print(f'Incorrect! The correct answer is: {answer}')
+                    streak = 0
+
+class Teacher(User):
+    def __init__(self, name, email, password, subject):
+        super().__init__(name, email, password)
+        self.subject = subject
+        self.flashcards_manager = Flashcards("skibidi.json")
+
+    def display_info(self):
+        return f"Teacher: {self.name}, Email: {self.email}, Subject: {self.subject}"
+
+    def abilities(self):
+        while True:
+            makeone = input('Make a flashcard (format: question,answer) or type "stop" to end: ')
+            if makeone.lower() == 'stop':
+                break
+            try:
+                key, value = makeone.split(',', 1)
+                self.flashcards_manager.flashcards[key.strip()] = value.strip()
+                self.flashcards_manager.save_flashcards()
+                print(f"Flashcard created: Key = '{key.strip()}', Value = '{value.strip()}'")
+            except ValueError:
+                print('Invalid format. Please use "question,answer".')
 
 def login():
     users_data = {
