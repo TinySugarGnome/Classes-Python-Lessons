@@ -694,18 +694,17 @@ def login():
     users_data = {
         "alice@example.com": Student("Alice", "alice@example.com", "password123", "S12345"),
         "smith@example.com": Teacher("Mr. Smith", "smith@example.com", "teacherpass", "Mathematics"),
+        "denis@example.com": Teacher("Mr. Denis", "denis@example.com", "imdenis", "CompSci"),
     }
 
-    name = input('Enter your name: ')
     email = input('Enter your email: ')
     password = input('Enter your password: ')
     
     user = users_data.get(email)
     
-    if user and user.password == password and user.name == name:
+    if user and user.password == password:
         print(user.display_info())
         user.abilities()
     else:
-        print("Invalid name, email, or password.")
-
+        print("Invalid email or password.")
 login()
